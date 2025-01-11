@@ -17,10 +17,13 @@ class SplashFragment: Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val binding = SplashFragmentBinding.inflate(inflater, container, false)
+        binding.viewModel = SplashViewModel(requireActivity().application)
         val view = binding.root
 
-        view.setOnClickListener {
-            findNavController().navigate(R.id.action_splash_fragment_to_home_fragment)
+        binding.viewModel?.booted?.observe(viewLifecycleOwner) { booted ->
+            if (booted) {
+                findNavController().navigate(R.id.action_splash_fragment_to_home_fragment)
+            }
         }
 
         return view
