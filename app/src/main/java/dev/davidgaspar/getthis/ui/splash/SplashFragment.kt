@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import dev.davidgaspar.getthis.R
 
 class SplashFragment: Fragment() {
@@ -14,6 +15,12 @@ class SplashFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.splash_fragment, container, false);
+        val view = inflater.inflate(R.layout.splash_fragment, container, false)
+
+        view.setOnClickListener {
+            findNavController().navigate(R.id.action_splash_fragment_to_home_fragment)
+        }
+
+        return view
     }
 }
