@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Get This</string>
     <string name="splash_screen">Splash Screen</string>
+    <string name="detail_fragment">Detail Fragment</string>
 </resources>

@@ -10,7 +10,7 @@
         android:id="@+id/splash_fragment"
         android:name="dev.davidgaspar.getthis.ui.splash.SplashFragment"
         android:label="Splash Fragment"
-        tools:layout="@layout/splash_fragment" >
+        tools:layout="@layout/splash_fragment">
 
         <action
             android:id="@+id/action_splash_fragment_to_home_fragment"
@@ -24,6 +24,17 @@
         android:id="@+id/home_fragment"
         android:name="dev.davidgaspar.getthis.ui.home.HomeFragment"
         android:label="Home Fragment"
-        tools:layout="@layout/home_fragment" />
+        tools:layout="@layout/home_fragment">
+
+        <action
+            android:id="@+id/action_home_fragment_to_detail_fragment"
+            app:destination="@id/detail_fragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/detail_fragment"
+        android:name="dev.davidgaspar.getthis.ui.detail.DetailFragment"
+        android:label="Detail Fragment"
+        tools:layout="@layout/detail_fragment"/>
 
 </navigation>
