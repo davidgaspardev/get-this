@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import dev.davidgaspar.getthis.R
+import dev.davidgaspar.getthis.databinding.HomeFragmentBinding
+import dev.davidgaspar.getthis.ui.components.LoadingButton
 
 class HomeFragment: Fragment() {
 
@@ -14,6 +15,11 @@ class HomeFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.home_fragment, container, false)
+        val binding = HomeFragmentBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+        binding.loadingButtonContainer.addView(LoadingButton(requireContext()))
+
+        return view
     }
 }
