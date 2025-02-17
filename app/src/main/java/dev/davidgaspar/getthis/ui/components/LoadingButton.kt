@@ -9,7 +9,8 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
-import kotlin.math.round
+import dev.davidgaspar.getthis.ui.components.utils.ButtonState
+import kotlin.properties.Delegates
 
 class LoadingButton @JvmOverloads constructor(
     context: Context,
@@ -19,12 +20,29 @@ class LoadingButton @JvmOverloads constructor(
     private var widthSize = 0
     private var heightSize = 0
 
-    private val valueAnimator = ValueAnimator()
+    private val valueAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+        duration = 5000
+        repeatCount = 0
+        addUpdateListener {
+            invalidate()
+        }
+    }
+
+    private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
+        when (new) {
+            ButtonState.Loading -> valueAnimator.start()
+            ButtonState.Completed -> valueAnimator.cancel()
+            else -> {}
+        }
+    }
 
     init {
         isClickable = true
-
         setBackgroundColor(0xFF0000)
+
+        setOnClickListener {
+            buttonState = ButtonState.Loading
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -66,7 +84,9 @@ class LoadingButton @JvmOverloads constructor(
     }
 
     private fun drawForeground(canvas: Canvas) {
-        val limit = width.toFloat() - 200
+        canvas.save()
+
+        val limit = width.toFloat() * valueAnimator.animatedValue as Float
 
         val path: Path = Path()
         path.addRect(
@@ -80,7 +100,7 @@ class LoadingButton @JvmOverloads constructor(
         canvas.clipPath(path)
 
         val paint: Paint = Paint().apply {
-            color = 0x64FFFFFF.toInt()
+            color = 0x64FFFFFF
         }
 
         canvas.drawRoundRect(
@@ -92,6 +112,8 @@ class LoadingButton @JvmOverloads constructor(
             32f,
             paint
         )
+
+        canvas.restore()
     }
 
     private fun drawText(canvas: Canvas) {
@@ -103,10 +125,6 @@ class LoadingButton @JvmOverloads constructor(
 
         canvas.drawText("Download", widthSize / 2f, heightSize / 2f, paint)
     }
-
-//    private var buttonState: ButtonState by Delegates.observable<ButtonState>(ButtonState.Completed) { p, old, new ->
-//
-//    }
 
     companion object {
         private const val TAG = "LoadingButton"
