@@ -57,7 +57,7 @@ class LoadingButton @JvmOverloads constructor(
         val minWidth = paddingLeft + paddingRight + suggestedMinimumWidth
         val width = resolveSizeAndState(minWidth, widthMeasureSpec, 1)
 //        val height = resolveSizeAndState(MeasureSpec.getSize(width), heightMeasureSpec, 0)
-        val height =  (width * 0.16).toInt()
+        val height = (width * 0.16).toInt()
 
         widthSize = width
         heightSize = height
@@ -123,7 +123,12 @@ class LoadingButton @JvmOverloads constructor(
             textSize = 48f
         }
 
-        canvas.drawText("Download", widthSize / 2f, heightSize / 2f, paint)
+        canvas.drawText(
+            if (buttonState == ButtonState.Loading) "We are loading" else "Download",
+            widthSize / 2f,
+            heightSize / 2f,
+            paint
+        )
     }
 
     companion object {
