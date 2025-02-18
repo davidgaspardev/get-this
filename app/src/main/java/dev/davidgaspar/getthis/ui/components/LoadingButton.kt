@@ -51,6 +51,7 @@ class LoadingButton @JvmOverloads constructor(
         setBackground(canvas)
         drawForeground(canvas)
         drawText(canvas)
+        drawLoadingCircle(canvas)
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
@@ -129,6 +130,44 @@ class LoadingButton @JvmOverloads constructor(
             (heightSize / 2f) + (paint.textSize / 2),
             paint
         )
+    }
+
+    private fun drawLoadingCircle(canvas: Canvas) {
+        val paint: Paint = Paint().apply {
+            color = 0x32323232
+        }
+
+        val radius = 32f
+        val diameter = radius * 2
+
+        canvas.drawCircle(
+            widthSize - diameter,
+            heightSize / 2f,
+            radius,
+            paint
+        )
+
+        if (buttonState != ButtonState.Loading) return
+
+        paint.color = 0xBBFFFFFF.toInt()
+
+        val sweepAngle = 360f * valueAnimator.animatedValue as Float
+
+        val path = Path().apply {
+            moveTo(widthSize - diameter, heightSize / 2f)
+            addArc(
+                widthSize - (diameter + radius),
+                heightSize / 2f - radius,
+                widthSize.toFloat() - radius,
+                heightSize / 2f + radius,
+                0f,
+                sweepAngle
+            )
+            lineTo(widthSize - diameter, heightSize / 2f)
+            close()
+        }
+
+        canvas.drawPath(path, paint)
     }
 
     companion object {
