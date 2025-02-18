@@ -126,7 +126,7 @@ class LoadingButton @JvmOverloads constructor(
         canvas.drawText(
             if (buttonState == ButtonState.Loading) "We are loading" else "Download",
             widthSize / 2f,
-            heightSize / 2f,
+            (heightSize / 2f) + (paint.textSize / 2),
             paint
         )
     }
