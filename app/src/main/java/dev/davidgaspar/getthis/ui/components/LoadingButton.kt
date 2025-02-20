@@ -39,10 +39,13 @@ class LoadingButton @JvmOverloads constructor(
     init {
         isClickable = true
         setBackgroundColor(0xFF0000)
+    }
 
-        setOnClickListener {
-            buttonState = ButtonState.Loading
-        }
+    override fun performClick(): Boolean {
+        super.performClick()
+        buttonState = ButtonState.Loading
+
+        return true;
     }
 
     override fun onDraw(canvas: Canvas) {
