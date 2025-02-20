@@ -1,49 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RadioGroup
+    <data>
+        <variable
+            name="viewModel"
+            type="dev.davidgaspar.getthis.ui.home.HomeViewModel"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent">
 
-        <RadioButton
-            android:id="@+id/radio_glide"
+        <RadioGroup
+            android:id="@+id/radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/gliden_image_loading_library_by_bumptech" />
+            android:orientation="vertical"
+            android:padding="32dp"
+            android:onCheckedChanged="@{(_, checkedId) -> viewModel.setSelectedRadioButtonId(checkedId)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <RadioButton
-            android:id="@+id/radio_loadapp"
+            <RadioButton
+                android:id="@+id/radio_glide"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/gliden_image_loading_library_by_bumptech" />
+
+            <RadioButton
+                android:id="@+id/radio_loadapp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/loadapp_current_repository_by_udacity" />
+
+            <RadioButton
+                android:id="@+id/radio_retrofit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/retrofit_type_safe_http_client_for_android_and_java_by_square_inc" />
+
+        </RadioGroup>
+
+
+        <dev.davidgaspar.getthis.ui.components.LoadingButton
+            android:id="@+id/loading_button_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/loadapp_current_repository_by_udacity" />
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="16dp"
+            android:onClick="@{() -> viewModel.onClickLoadingButton()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-        <RadioButton
-            android:id="@+id/radio_retrofit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/retrofit_type_safe_http_client_for_android_and_java_by_square_inc" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </RadioGroup>
-
-
-    <FrameLayout
-        android:id="@+id/loading_button_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
