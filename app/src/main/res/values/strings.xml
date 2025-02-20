@@ -2,4 +2,7 @@
     <string name="app_name">Get This</string>
     <string name="splash_screen">Splash Screen</string>
     <string name="detail_fragment">Detail Fragment</string>
+    <string name="gliden_image_loading_library_by_bumptech">Gliden - Image Loading Library by BumpTech</string>
+    <string name="loadapp_current_repository_by_udacity">LoadApp - Current repository by Udacity</string>
+    <string name="retrofit_type_safe_http_client_for_android_and_java_by_square_inc">RetroFit - Type-safe http client for Android and Java by Square, Inc</string>
 </resources>
