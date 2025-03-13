@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import dev.davidgaspar.getthis.databinding.HomeFragmentBinding
+import dev.davidgaspar.getthis.di.DependencyProvider
 import dev.davidgaspar.getthis.ui.components.LoadingButton
 
 class HomeFragment: Fragment() {
@@ -19,7 +20,10 @@ class HomeFragment: Fragment() {
     ): View {
         val binding = HomeFragmentBinding.inflate(inflater, container, false)
         val view = binding.root
-        val viewModel = HomeViewModel(requireActivity().application)
+        val viewModel = HomeViewModel(
+            requireActivity().application,
+            DependencyProvider().imageRepository
+        )
 
         binding.viewModel = viewModel
 
