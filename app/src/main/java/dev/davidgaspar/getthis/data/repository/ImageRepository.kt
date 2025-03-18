@@ -1,41 +1,53 @@
 package dev.davidgaspar.getthis.data.repository
 
+import android.app.Application
+import android.content.Context
+import android.os.Environment
+import android.util.Log
 import dev.davidgaspar.getthis.data.api.DownloadApi
-import okhttp3.ResponseBody
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import java.io.OutputStream
 
-class ImageRepository constructor(
-    private val downloadApi: DownloadApi
+class ImageRepository (
+    private val downloadApi: DownloadApi,
+    private val application: Application
 ) {
-    suspend fun downloadImage(url: String) {
+    suspend fun download(url: String, fileName: String = url.split("/").last()) {
         val response = downloadApi.fromUrl(url)
         if (response.isSuccessful) {
-            response.body()?.let { responseBody ->
-                // Save the image to the device
+            val file = File(application.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
+
+            Log.d("Download", "Downloading file to ${file.absolutePath}")
+
+            response.body()?.let {
+                saveImageByteToFile(it.byteStream(), file)
             }
         }
     }
 
-    private fun saveImageToDisk(resBody: ResponseBody) {
-        // Save the image to the device
-        var inputStream: InputStream? = null
-        var outputStream: FileOutputStream? = null
+    private suspend fun saveImageByteToFile(inputStream: InputStream, file: File) {
+            return withContext(Dispatchers.IO) {
+                try {
+                    val outputStream: OutputStream = FileOutputStream(file)
 
-        try {
-            inputStream = resBody.byteStream()
-            outputStream = FileOutputStream("image.jpg")
-            val buffer = ByteArray(4096)
-            var bytesRead: Int
+                    val buffer = ByteArray(4096)
+                    var bytesRead: Int
 
-            while (inputStream.read(buffer).also { bytesRead = it } != -1) {
-                outputStream.write(buffer, 0, bytesRead)
+                    while (inputStream.read(buffer).also { bytesRead = it ?: -1 } != -1) {
+                        outputStream.write(buffer, 0, bytesRead)
+                    }
+
+                    outputStream.flush()
+                    inputStream.close()
+                    outputStream.close()
+
+                } catch (e: Exception) {
+                    Log.e("Download", "Error downloading file", e)
+                }
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            inputStream?.close()
-            outputStream?.close()
-        }
     }
 }

@@ -45,7 +45,7 @@ class HomeViewModel(
 
                 viewModelScope.launch {
                     try {
-                        imageRepository.downloadImage(url)
+                        imageRepository.download(url)
                         setToastMessage("Downloaded $url")
                     } catch (e: Exception) {
                         setToastMessage("Failed to download $url")

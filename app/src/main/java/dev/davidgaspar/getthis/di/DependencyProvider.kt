@@ -1,15 +1,28 @@
 package dev.davidgaspar.getthis.di
 
+import android.app.Application
 import dev.davidgaspar.getthis.data.api.DownloadApi
 import dev.davidgaspar.getthis.data.repository.ImageRepository
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
-class DependencyProvider {
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("https://github.com")
-        .build()
+object DependencyProvider {
+    private val okHttClient: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .build()
+    }
 
-    private val downloadApi = retrofit.create(DownloadApi::class.java)
+    private val retrofit: Retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("https://api.github.com")
+            .client(okHttClient)
+            .build()
+    }
 
-    val imageRepository = ImageRepository(downloadApi)
+    fun getImageRepository(application: Application): ImageRepository {
+        return ImageRepository(
+            retrofit.create(DownloadApi::class.java),
+            application
+        )
+    }
 }
