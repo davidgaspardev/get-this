@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "198283960063",
+    "project_id": "myself-dg",
+    "storage_bucket": "myself-dg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198283960063:android:717852737a16bee369f6ca",
+        "android_client_info": {
+          "package_name": "dev.davidgaspar.bytebank"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOaN2JZTG4hpiEDUXaK4NDdSkajKb-Nxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198283960063:android:1e8eae2d1259aac769f6ca",
+        "android_client_info": {
+          "package_name": "dev.davidgaspar.eggtimernotifications"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOaN2JZTG4hpiEDUXaK4NDdSkajKb-Nxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:198283960063:android:2cc343039d19153b69f6ca",
+        "android_client_info": {
+          "package_name": "dev.davidgaspar.getthis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOaN2JZTG4hpiEDUXaK4NDdSkajKb-Nxg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
