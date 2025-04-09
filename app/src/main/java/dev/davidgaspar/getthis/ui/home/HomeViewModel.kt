@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import dev.davidgaspar.getthis.R
+import dev.davidgaspar.getthis.data.config.radioButtonUrlMap
 import dev.davidgaspar.getthis.data.repository.ImageRepository
 import kotlinx.coroutines.launch
 
@@ -13,12 +13,6 @@ class HomeViewModel(
     application: Application,
     private val imageRepository: ImageRepository
 ): AndroidViewModel(application) {
-
-    private val radioButtonUrlMap = mapOf(
-        R.id.radio_glide to "/bumptech/glide",
-        R.id.radio_loadapp to "/udacity/nd940-c3-advanced-android-programming-project-starter",
-        R.id.radio_retrofit to "/square/retrofit"
-    )
 
     private val _selectedRadioButtonId = MutableLiveData<Int?>()
     val selectedRadioButtonId: LiveData<Int?> get() = _selectedRadioButtonId
