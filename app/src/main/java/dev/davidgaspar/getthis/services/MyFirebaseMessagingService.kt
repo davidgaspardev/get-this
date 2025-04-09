@@ -15,11 +15,18 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             Log.d(TAG, "Message data payload: ${message.data}")
         }
 
-        message.notification?.body?.let {
-            Log.d(TAG, "Message Notification Body: $it")
-            // Handle the notification here
-        } ?: run {
-            Log.w(TAG, "Message Notification Body is null")
+        message.notification?.let { notification ->
+            if (notification.title != null) {
+                Log.d(TAG, "Message Notification Title: ${notification.title}")
+            } else {
+                Log.w(TAG, "Message Notification Title is null")
+            }
+
+            if (notification.body != null) {
+                Log.d(TAG, "Message Notification Body: ${notification.body}")
+            } else {
+                Log.w(TAG, "Message Notification Body is null")
+            }
         }
     }
 
