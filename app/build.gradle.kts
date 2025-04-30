@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.retrofit)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
