@@ -1,6 +1,5 @@
 package dev.davidgaspar.getthis.data.repository
 
-import android.app.Application
 import android.content.Context
 import android.os.Environment
 import android.util.Log
@@ -14,18 +13,22 @@ import java.io.OutputStream
 
 class ImageRepository (
     private val downloadApi: DownloadApi,
-    private val application: Application
+    private val context: Context
 ) {
-    suspend fun download(url: String, fileName: String = url.split("/").last()) {
+    suspend fun download(url: String, fileName: String = url.split("/").last()): String {
         val response = downloadApi.fromUrl(url)
         if (response.isSuccessful) {
-            val file = File(application.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
+            val file = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
 
             Log.d("Download", "Downloading file to ${file.absolutePath}")
 
             response.body()?.let {
                 saveImageByteToFile(it.byteStream(), file)
             }
+
+            return file.absolutePath
+        } else {
+            throw Exception("Error downloading file")
         }
     }
 
