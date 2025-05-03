@@ -17,19 +17,16 @@ class ImageRepository (
 ) {
     suspend fun download(url: String, fileName: String = url.split("/").last()): String {
         val response = downloadApi.fromUrl(url)
-        if (response.isSuccessful) {
-            val file = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
-
-            Log.d("Download", "Downloading file to ${file.absolutePath}")
-
-            response.body()?.let {
-                saveImageByteToFile(it.byteStream(), file)
-            }
-
-            return file.absolutePath
-        } else {
-            throw Exception("Error downloading file")
+        if (!response.isSuccessful) {
+            throw Exception("Error downloading file (url: ${url}): ${response.code()} ${response.message()}")
         }
+
+        val responseBody = response.body() ?: throw Exception("Response body is null")
+        val file = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
+
+        saveImageByteToFile(responseBody.byteStream(), file)
+
+        return file.absolutePath
     }
 
     private suspend fun saveImageByteToFile(inputStream: InputStream, file: File) {
@@ -52,5 +49,9 @@ class ImageRepository (
                     Log.e("Download", "Error downloading file", e)
                 }
             }
+    }
+
+    companion object {
+        private const val TAG = "ImageRepository"
     }
 }

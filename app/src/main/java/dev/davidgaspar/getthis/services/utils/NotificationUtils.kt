@@ -29,6 +29,7 @@ fun NotificationManager.sendDownloadNotification(
     val notification = NotificationCompat.Builder(
         applicationContext,
         DOWNLOAD_DETAILS_CHANNEL_ID)
+        .setSmallIcon(android.R.drawable.sym_def_app_icon)
         .setContentText(message)
         .setContentIntent(contentPendingIntent)
         .build()
