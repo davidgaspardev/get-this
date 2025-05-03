@@ -1,11 +1,11 @@
 package dev.davidgaspar.getthis.services.utils
 
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
+import android.os.Bundle
 import androidx.core.app.NotificationCompat
-import dev.davidgaspar.getthis.ui.detail.DetailFragment
+import androidx.navigation.NavDeepLinkBuilder
+import dev.davidgaspar.getthis.R
 
 const val DOWNLOAD_DETAILS_CHANNEL_ID = "download_details_channel";
 const val NOTIFICATION_ID = 0
@@ -15,16 +15,13 @@ fun NotificationManager.sendDownloadNotification(
     message: String,
     filePath: String,
 ) {
-    val contentIntent = Intent(applicationContext, DetailFragment::class.java).apply {
-        putExtra("filePath", filePath)
-    }
-
-    val contentPendingIntent = PendingIntent.getActivity(
-        applicationContext,
-        NOTIFICATION_ID,
-        contentIntent,
-        PendingIntent.FLAG_UPDATE_CURRENT
-    )
+    val contentPendingIntent = NavDeepLinkBuilder(applicationContext)
+        .setGraph(R.navigation.nav_graph)
+        .setDestination(R.id.detail_fragment)
+        .setArguments(Bundle().apply {
+            putString("filePath", filePath)
+        })
+        .createPendingIntent()
 
     val notification = NotificationCompat.Builder(
         applicationContext,
