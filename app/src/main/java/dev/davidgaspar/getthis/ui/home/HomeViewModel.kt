@@ -8,14 +8,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import dev.davidgaspar.getthis.data.config.radioButtonUrlMap
-import dev.davidgaspar.getthis.data.repository.ImageRepository
+import com.google.gson.Gson
+import dev.davidgaspar.getthis.data.config.radioButtonDownloadInfoMap
 import dev.davidgaspar.getthis.data.workers.DownloadWorker
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     application: Application,
-    private val imageRepository: ImageRepository
 ): AndroidViewModel(application) {
 
     private val _selectedRadioButtonId = MutableLiveData<Int?>()
@@ -38,13 +37,16 @@ class HomeViewModel(
                 setToastMessage("Please select a radio button")
             }
 
-            radioButtonUrlMap[radioButtonId]?.let { url ->
-                setToastMessage("Loading $url")
+            radioButtonDownloadInfoMap[radioButtonId]?.let { downloadInfo ->
+                setToastMessage("Loading ${downloadInfo.url}")
 
                 viewModelScope.launch {
                     try {
+                        val gson = Gson()
+                        val downloadInfoJson = gson.toJson(downloadInfo)
+
                         val inputData = Data.Builder()
-                            .putString("url", url)
+                            .putString("downloadInfoJson", downloadInfoJson)
                             .build()
 
                         val request = OneTimeWorkRequestBuilder<DownloadWorker>()
@@ -52,9 +54,9 @@ class HomeViewModel(
                             .build()
 
                         WorkManager.getInstance(getApplication()).enqueue(request)
-                        setToastMessage("Downloaded $url")
+                        setToastMessage("Downloaded ${downloadInfo.url}")
                     } catch (e: Exception) {
-                        setToastMessage("Failed to download $url")
+                        setToastMessage("Failed to download ${downloadInfo.url}")
                     }
                 }
             }

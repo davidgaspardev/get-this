@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Environment
 import android.util.Log
 import dev.davidgaspar.getthis.data.api.DownloadApi
+import dev.davidgaspar.getthis.data.model.DownloadInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -15,18 +16,21 @@ class ImageRepository (
     private val downloadApi: DownloadApi,
     private val context: Context
 ) {
-    suspend fun download(url: String, fileName: String = url.split("/").last()): String {
-        val response = downloadApi.fromUrl(url)
+    suspend fun download(downloadInfo: DownloadInfo): File {
+        val response = downloadApi.fromUrl(downloadInfo.url)
         if (!response.isSuccessful) {
-            throw Exception("Error downloading file (url: ${url}): ${response.code()} ${response.message()}")
+            throw Exception("Error downloading file (url: ${downloadInfo.url}): ${response.code()} ${response.message()}")
         }
 
         val responseBody = response.body() ?: throw Exception("Response body is null")
-        val file = File(context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), fileName)
+        val file = File(
+            context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+            downloadInfo.name
+        )
 
         saveImageByteToFile(responseBody.byteStream(), file)
 
-        return file.absolutePath
+        return file
     }
 
     private suspend fun saveImageByteToFile(inputStream: InputStream, file: File) {

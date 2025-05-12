@@ -1,9 +1,19 @@
 package dev.davidgaspar.getthis.data.config
 
 import dev.davidgaspar.getthis.R
+import dev.davidgaspar.getthis.data.model.DownloadInfo
 
-val radioButtonUrlMap = mapOf(
-    R.id.radio_glide to "https://github.com/bumptech/glide",
-    R.id.radio_loadapp to "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter",
-    R.id.radio_retrofit to "https://github.com/square/retrofit"
+val radioButtonDownloadInfoMap = mapOf(
+    R.id.radio_glide to DownloadInfo(
+        name = "Gliden - Image Loading Library by BumpTech",
+        url = "https://github.com/bumptech/glide"
+    ),
+    R.id.radio_loadapp to DownloadInfo(
+        name = "Gliden - Image Loading Library by BumpTech",
+        url = "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter"
+    ),
+    R.id.radio_retrofit to DownloadInfo(
+        name = "Retrofit - Type-safe HTTP client for Android and Java by Square",
+        url = "https://github.com/square/retrofit"
+    )
 )
