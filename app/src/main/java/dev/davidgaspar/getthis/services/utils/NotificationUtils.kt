@@ -7,14 +7,14 @@ import androidx.core.app.NotificationCompat
 import androidx.navigation.NavDeepLinkBuilder
 import dev.davidgaspar.getthis.R
 
-const val DOWNLOAD_DETAILS_CHANNEL_ID = "download_details_channel";
-const val NOTIFICATION_ID = 0
+const val DOWNLOAD_DETAILS_CHANNEL_ID = "download_details_channel"
 
 fun NotificationManager.sendDownloadNotification(
     applicationContext: Context,
     message: String,
     filePath: String,
 ) {
+    val notificationId = filePath.hashCode()
     val contentPendingIntent = NavDeepLinkBuilder(applicationContext)
         .setGraph(R.navigation.nav_graph)
         .setDestination(R.id.detail_fragment)
@@ -31,5 +31,5 @@ fun NotificationManager.sendDownloadNotification(
         .setContentIntent(contentPendingIntent)
         .build()
 
-    notify(NOTIFICATION_ID, notification)
+    notify(notificationId, notification)
 }
