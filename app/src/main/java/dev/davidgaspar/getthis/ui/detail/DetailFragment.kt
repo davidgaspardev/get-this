@@ -1,6 +1,7 @@
 package dev.davidgaspar.getthis.ui.detail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,7 @@ class DetailFragment: Fragment() {
         val downloadInfoJson = arguments?.getString("downloadInfoJson")
         if (downloadInfoJson == null) {
             // Log an error and return early if the argument is missing
-            android.util.Log.e("DetailFragment", "Missing 'downloadInfoJson' argument")
+            Log.e(TAG, "Missing 'downloadInfoJson' argument")
             requireActivity().finish() // Close the activity or handle as appropriate
             return binding.root
         }
@@ -35,5 +36,9 @@ class DetailFragment: Fragment() {
         binding.viewModel = viewModel
 
         return view
+    }
+
+    companion object {
+        private const val TAG = "DetailFragment"
     }
 }
