@@ -20,6 +20,12 @@ class DetailFragment: Fragment() {
         val view = binding.root
         val application = requireActivity().application
         val downloadInfoJson = arguments?.getString("downloadInfoJson")
+        if (downloadInfoJson == null) {
+            // Log an error and return early if the argument is missing
+            android.util.Log.e("DetailFragment", "Missing 'downloadInfoJson' argument")
+            requireActivity().finish() // Close the activity or handle as appropriate
+            return binding.root
+        }
         val downloadInfo = Gson().fromJson(downloadInfoJson, DownloadInfo::class.java)
         val viewModel = DetailViewModel(
             application,
