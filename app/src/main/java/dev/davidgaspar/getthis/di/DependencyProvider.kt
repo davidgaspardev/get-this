@@ -1,6 +1,6 @@
 package dev.davidgaspar.getthis.di
 
-import android.app.Application
+import android.content.Context
 import dev.davidgaspar.getthis.data.api.DownloadApi
 import dev.davidgaspar.getthis.data.repository.ImageRepository
 import okhttp3.OkHttpClient
@@ -19,10 +19,10 @@ object DependencyProvider {
             .build()
     }
 
-    fun getImageRepository(application: Application): ImageRepository {
+    fun getImageRepository(context: Context): ImageRepository {
         return ImageRepository(
             retrofit.create(DownloadApi::class.java),
-            application
+            context
         )
     }
 }
