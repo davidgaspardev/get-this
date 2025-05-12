@@ -5,11 +5,11 @@ import dev.davidgaspar.getthis.data.model.DownloadInfo
 
 val radioButtonDownloadInfoMap = mapOf(
     R.id.radio_glide to DownloadInfo(
-        name = "Gliden - Image Loading Library by BumpTech",
+        name = "Glide - Image Loading Library by BumpTech",
         url = "https://github.com/bumptech/glide"
     ),
     R.id.radio_loadapp to DownloadInfo(
-        name = "Gliden - Image Loading Library by BumpTech",
+        name = "LoadApp - Current repository by Udacity",
         url = "https://github.com/udacity/nd940-c3-advanced-android-programming-project-starter"
     ),
     R.id.radio_retrofit to DownloadInfo(
