@@ -9,6 +9,8 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
+import androidx.core.content.withStyledAttributes
+import dev.davidgaspar.getthis.R
 import dev.davidgaspar.getthis.ui.components.utils.ButtonState
 import kotlin.properties.Delegates
 
@@ -17,6 +19,8 @@ class LoadingButton @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : View(context, attrs, defStyleAttr) {
+    private var backgroundColor = Color.BLUE
+    private var textColor = Color.WHITE
     private var widthSize = 0
     private var heightSize = 0
 
@@ -28,7 +32,7 @@ class LoadingButton @JvmOverloads constructor(
         }
     }
 
-    private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { p, old, new ->
+    private var buttonState: ButtonState by Delegates.observable(ButtonState.Completed) { _, _, new ->
         when (new) {
             ButtonState.Loading -> valueAnimator.start()
             ButtonState.Completed -> valueAnimator.cancel()
@@ -38,7 +42,11 @@ class LoadingButton @JvmOverloads constructor(
 
     init {
         isClickable = true
-        setBackgroundColor(0xFF0000)
+
+        context.withStyledAttributes(attrs, R.styleable.LoadingButton) {
+            backgroundColor = getColor(R.styleable.LoadingButton_backgroundColor, backgroundColor)
+            textColor = getColor(R.styleable.LoadingButton_foregroundColor, textColor)
+        }
     }
 
     override fun performClick(): Boolean {
@@ -60,7 +68,6 @@ class LoadingButton @JvmOverloads constructor(
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         val minWidth = paddingLeft + paddingRight + suggestedMinimumWidth
         val width = resolveSizeAndState(minWidth, widthMeasureSpec, 1)
-//        val height = resolveSizeAndState(MeasureSpec.getSize(width), heightMeasureSpec, 0)
         val height = (width * 0.16).toInt()
 
         widthSize = width
@@ -73,7 +80,7 @@ class LoadingButton @JvmOverloads constructor(
 
     private fun setBackground(canvas: Canvas) {
         val paint: Paint = Paint().apply {
-            color = Color.RED
+            color = backgroundColor
         }
 
         canvas.drawRoundRect(
@@ -92,7 +99,7 @@ class LoadingButton @JvmOverloads constructor(
 
         val limit = width.toFloat() * valueAnimator.animatedValue as Float
 
-        val path: Path = Path()
+        val path = Path()
         path.addRect(
             0f,
             0f,
@@ -122,7 +129,7 @@ class LoadingButton @JvmOverloads constructor(
 
     private fun drawText(canvas: Canvas) {
         val paint: Paint = Paint().apply {
-            color = Color.WHITE
+            color = textColor
             textAlign = Paint.Align.CENTER
             textSize = 48f
         }
