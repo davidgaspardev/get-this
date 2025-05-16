@@ -45,7 +45,7 @@ class LoadingButton @JvmOverloads constructor(
 
         context.withStyledAttributes(attrs, R.styleable.LoadingButton) {
             backgroundColor = getColor(R.styleable.LoadingButton_backgroundColor, backgroundColor)
-            textColor = getColor(R.styleable.LoadingButton_foregroundColor, textColor)
+            textColor = getColor(R.styleable.LoadingButton_textColor, textColor)
         }
     }
 
@@ -53,7 +53,7 @@ class LoadingButton @JvmOverloads constructor(
         super.performClick()
         buttonState = ButtonState.Loading
 
-        return true;
+        return true
     }
 
     override fun onDraw(canvas: Canvas) {
