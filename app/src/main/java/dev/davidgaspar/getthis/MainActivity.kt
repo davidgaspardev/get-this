@@ -59,10 +59,11 @@ class MainActivity : AppCompatActivity() {
             if (!areEnabled) {
                 AlertDialog.Builder(this)
                     .setTitle("Enable Notifications")
-                    .setMessage("Please enable notifications to receive important updates.")
+                    .setMessage("Please enable notifications to receive updates about your downloads.")
                     .setPositiveButton("Go to Settings") { _, _ ->
                         val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS).apply {
                             putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                            putExtra(Settings.EXTRA_CHANNEL_ID, DOWNLOAD_DETAILS_CHANNEL_ID)
                         }
                         startActivity(intent)
                     }
