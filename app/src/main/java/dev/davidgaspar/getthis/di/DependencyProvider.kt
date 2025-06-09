@@ -2,7 +2,7 @@ package dev.davidgaspar.getthis.di
 
 import android.content.Context
 import dev.davidgaspar.getthis.data.api.DownloadApi
-import dev.davidgaspar.getthis.data.repository.ImageRepository
+import dev.davidgaspar.getthis.data.repository.FileRepository
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 
@@ -19,8 +19,8 @@ object DependencyProvider {
             .build()
     }
 
-    fun getImageRepository(context: Context): ImageRepository {
-        return ImageRepository(
+    fun getFileRepository(context: Context): FileRepository {
+        return FileRepository(
             retrofit.create(DownloadApi::class.java),
             context
         )

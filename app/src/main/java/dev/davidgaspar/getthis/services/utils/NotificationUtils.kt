@@ -19,7 +19,7 @@ fun NotificationManager.sendDownloadNotification(
     val downloadInfoJson = Gson().toJson(downloadInfo)
     val contentPendingIntent = NavDeepLinkBuilder(applicationContext)
         .setGraph(R.navigation.nav_graph)
-        .setDestination(R.id.detail_fragment)
+        .setDestination(R.id.detail_activity)
         .setArguments(Bundle().apply {
             putString("downloadInfoJson", downloadInfoJson)
         })

@@ -6,11 +6,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.davidgaspar.getthis.data.model.DownloadInfo
 
-class DetailViewModel(
+class DetailsViewModel(
     application: Application,
     downloadInfo: DownloadInfo,
 ): AndroidViewModel(application) {
 
-    private val _downloadInfo = MutableLiveData<DownloadInfo>(downloadInfo)
+    private val _downloadInfo = MutableLiveData(downloadInfo)
     val downloadInfo: LiveData<DownloadInfo> get() = _downloadInfo
 }

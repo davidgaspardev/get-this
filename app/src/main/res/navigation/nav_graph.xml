@@ -4,37 +4,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splash_fragment">
+    app:startDestination="@id/home_activity">
 
     <fragment
-        android:id="@+id/splash_fragment"
-        android:name="dev.davidgaspar.getthis.ui.splash.SplashFragment"
-        android:label="Splash Fragment"
-        tools:layout="@layout/splash_fragment">
-
-        <action
-            android:id="@+id/action_splash_fragment_to_home_fragment"
-            app:destination="@id/home_fragment"
-            app:popUpTo="@id/splash_fragment"
-            app:popUpToInclusive="true"/>
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/home_fragment"
+        android:id="@+id/home_activity"
         android:name="dev.davidgaspar.getthis.ui.home.HomeFragment"
-        android:label="Home Fragment"
+        android:label="Home Activity"
         tools:layout="@layout/home_fragment">
 
         <action
-            android:id="@+id/action_home_fragment_to_detail_fragment"
-            app:destination="@id/detail_fragment"/>
+            android:id="@+id/action_home_activity_to_detail_activity"
+            app:destination="@id/detail_activity"/>
     </fragment>
 
-    <fragment
-        android:id="@+id/detail_fragment"
-        android:name="dev.davidgaspar.getthis.ui.detail.DetailFragment"
-        android:label="Detail Fragment"
-        tools:layout="@layout/detail_fragment"/>
+    <activity
+        android:id="@+id/detail_activity"
+        android:name="dev.davidgaspar.getthis.ui.detail.DetailsActivity"
+        android:label="Details Activity"
+        tools:layout="@layout/details_activity"/>
 
 </navigation>

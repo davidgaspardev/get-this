@@ -5,18 +5,17 @@ import android.os.Environment
 import android.util.Log
 import dev.davidgaspar.getthis.data.api.DownloadApi
 import dev.davidgaspar.getthis.data.model.DownloadInfo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.io.OutputStream
 
-class ImageRepository (
+class FileRepository (
     private val downloadApi: DownloadApi,
     private val context: Context
 ) {
     suspend fun download(downloadInfo: DownloadInfo): File {
+        Log.d(TAG, "Downloading image from ${downloadInfo.url}")
         val response = downloadApi.fromUrl(downloadInfo.url)
         if (!response.isSuccessful) {
             throw Exception("Error downloading file (url: ${downloadInfo.url}): ${response.code()} ${response.message()}")
@@ -28,31 +27,31 @@ class ImageRepository (
             downloadInfo.name
         )
 
-        saveImageByteToFile(responseBody.byteStream(), file)
+        saveResponseToFile(responseBody.byteStream(), file)
 
         return file
     }
 
-    private suspend fun saveImageByteToFile(inputStream: InputStream, file: File) {
-            return withContext(Dispatchers.IO) {
-                try {
-                    val outputStream: OutputStream = FileOutputStream(file)
+    private fun saveResponseToFile(inputStream: InputStream, file: File) {
+        Log.d(TAG, "Saving file to ${file.absolutePath}")
 
-                    val buffer = ByteArray(4096)
-                    var bytesRead: Int
+        try {
+            val outputStream: OutputStream = FileOutputStream(file)
 
-                    while (inputStream.read(buffer).also { bytesRead = it ?: -1 } != -1) {
-                        outputStream.write(buffer, 0, bytesRead)
-                    }
+            val buffer = ByteArray(4096)
+            var bytesRead: Int
 
-                    outputStream.flush()
-                    inputStream.close()
-                    outputStream.close()
-
-                } catch (e: Exception) {
-                    Log.e("Download", "Error downloading file", e)
-                }
+            while (inputStream.read(buffer).also { bytesRead = it ?: -1 } != -1) {
+                outputStream.write(buffer, 0, bytesRead)
             }
+
+            outputStream.flush()
+            inputStream.close()
+            outputStream.close()
+
+        } catch (e: Exception) {
+            Log.e("Download", "Error downloading file", e)
+        }
     }
 
     companion object {
