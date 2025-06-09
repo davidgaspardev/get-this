@@ -12,7 +12,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/space_medium">
 
         <TextView
             android:id="@+id/text_view_label_name"
@@ -20,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="Name"
             android:textSize="20sp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="@dimen/space_small"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -39,8 +40,8 @@
             android:layout_height="wrap_content"
             android:text="Status"
             android:textSize="20sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="@dimen/space_medium"
+            android:layout_marginBottom="@dimen/space_small"
             app:layout_constraintTop_toBottomOf="@id/text_view_name"
             app:layout_constraintStart_toStartOf="parent"/>
 
@@ -59,8 +60,8 @@
             android:layout_height="wrap_content"
             android:text="Location"
             android:textSize="20sp"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="@dimen/space_medium"
+            android:layout_marginBottom="@dimen/space_small"
             app:layout_constraintTop_toBottomOf="@id/text_view_status"
             app:layout_constraintStart_toStartOf="parent"/>
 
