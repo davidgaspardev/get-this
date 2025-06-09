@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/space_medium">
+        android:padding="@dimen/space_medium">
 
         <TextView
             android:id="@+id/text_view_label_name"
