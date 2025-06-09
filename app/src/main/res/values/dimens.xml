@@ -3,4 +3,8 @@
     <dimen name="space_small">8dp</dimen>
     <dimen name="space_medium">16dp</dimen>
     <dimen name="space_large">24dp</dimen>
+
+    <dimen name="size_small">8sp</dimen>
+    <dimen name="size_medium">16sp</dimen>
+    <dimen name="size_large">24sp</dimen>
 </resources>
