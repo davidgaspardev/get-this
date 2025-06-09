@@ -10,6 +10,7 @@ import android.util.Log
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessaging
 import dev.davidgaspar.getthis.services.utils.DOWNLOAD_DETAILS_CHANNEL_ID
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         subscribeMessageToTopic()
         setupNotification()
         checkAndRequestNotificationPermission()
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 
     private fun subscribeMessageToTopic() {
