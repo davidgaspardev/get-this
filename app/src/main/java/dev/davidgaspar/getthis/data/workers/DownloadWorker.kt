@@ -18,10 +18,12 @@ class DownloadWorker(
     override suspend fun doWork(): Result {
         val downloadInfoJson = inputData.getString("downloadInfoJson") ?: return Result.failure()
         val downloadInfo = Gson().fromJson(downloadInfoJson, DownloadInfo::class.java)
-        val imageRepository = DependencyProvider.getImageRepository(context)
+        val fileRepository = DependencyProvider.getFileRepository(context)
 
         return try {
-            val imagePath = imageRepository.download(downloadInfo)
+            Log.d(LOG_TAG, "Downloading file from ${downloadInfo.url}")
+
+            val imagePath = fileRepository.download(downloadInfo)
             downloadInfo.filePath = imagePath.absolutePath
             downloadInfo.status = "Success"
 

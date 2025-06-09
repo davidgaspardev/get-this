@@ -10,6 +10,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.google.gson.Gson
 import dev.davidgaspar.getthis.data.config.radioButtonDownloadInfoMap
+import dev.davidgaspar.getthis.data.model.DownloadInfo
 import dev.davidgaspar.getthis.data.workers.DownloadWorker
 import kotlinx.coroutines.launch
 
@@ -18,7 +19,7 @@ class HomeViewModel(
 ): AndroidViewModel(application) {
 
     private val _selectedRadioButtonId = MutableLiveData<Int?>()
-    val selectedRadioButtonId: LiveData<Int?> get() = _selectedRadioButtonId
+    private val selectedRadioButtonId: LiveData<Int?> get() = _selectedRadioButtonId
 
     fun setSelectedRadioButtonId(id: Int) {
         _selectedRadioButtonId.value = id
@@ -34,31 +35,43 @@ class HomeViewModel(
     fun onClickLoadingButton() {
         selectedRadioButtonId.value.let { radioButtonId ->
             if (radioButtonId == null) {
-                setToastMessage("Please select a radio button")
+                return setToastMessage("Please select a radio button")
             }
 
-            radioButtonDownloadInfoMap[radioButtonId]?.let { downloadInfo ->
+            radioButtonDownloadInfoMap[radioButtonId].let { downloadInfo ->
+                if (downloadInfo == null) {
+                    return setToastMessage("No download info found for selected radio button")
+                }
+
                 setToastMessage("Loading ${downloadInfo.url}")
 
-                viewModelScope.launch {
-                    try {
-                        val gson = Gson()
-                        val downloadInfoJson = gson.toJson(downloadInfo)
+                startDownloadInBackground(downloadInfo)
+            }
+        }
+    }
 
-                        val inputData = Data.Builder()
-                            .putString("downloadInfoJson", downloadInfoJson)
-                            .build()
+    private fun startDownloadInBackground(downloadInfo: DownloadInfo) {
+        viewModelScope.launch {
+            val workManager = WorkManager.getInstance(getApplication())
+            workManager.cancelAllWorkByTag(downloadInfo.url)
 
-                        val request = OneTimeWorkRequestBuilder<DownloadWorker>()
-                            .setInputData(inputData)
-                            .build()
+            try {
+                val gson = Gson()
+                val downloadInfoJson = gson.toJson(downloadInfo)
 
-                        WorkManager.getInstance(getApplication()).enqueue(request)
-                        setToastMessage("Downloaded ${downloadInfo.url}")
-                    } catch (e: Exception) {
-                        setToastMessage("Failed to download ${downloadInfo.url}")
-                    }
-                }
+                val inputData = Data.Builder()
+                    .putString("downloadInfoJson", downloadInfoJson)
+                    .build()
+
+                val request = OneTimeWorkRequestBuilder<DownloadWorker>()
+                    .addTag(downloadInfo.url)
+                    .setInputData(inputData)
+                    .build()
+
+                workManager.enqueue(request)
+                setToastMessage("Downloaded ${downloadInfo.url}")
+            } catch (e: Exception) {
+                setToastMessage("Failed to download ${downloadInfo.url}")
             }
         }
     }

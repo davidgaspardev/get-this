@@ -25,6 +25,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.detail.DetailsActivity">
+        </activity>
+
         <service
             android:name=".services.MyFirebaseMessagingService"
             android:exported="false">
