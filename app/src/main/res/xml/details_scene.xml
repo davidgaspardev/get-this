@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <Transition
+        android:id="@+id/details_transition"
         app:constraintSetStart="@+id/start"
         app:constraintSetEnd="@+id/end"
         app:autoTransition="animateToEnd"
