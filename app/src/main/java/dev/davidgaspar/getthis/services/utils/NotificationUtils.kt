@@ -28,9 +28,9 @@ fun NotificationManager.sendDownloadNotification(
     val notification = NotificationCompat.Builder(
         applicationContext,
         DOWNLOAD_DETAILS_CHANNEL_ID)
-        .setSmallIcon(android.R.drawable.sym_def_app_icon)
+        .setSmallIcon(android.R.drawable.ic_menu_send)
         .setContentText(downloadInfo.name)
-        .setContentIntent(contentPendingIntent)
+        .addAction(android.R.drawable.ic_menu_send, "Check the status", contentPendingIntent)
         .build()
 
     notify(notificationId, notification)
